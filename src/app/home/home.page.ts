@@ -55,9 +55,9 @@ export class HomePage {
         this.zeigeToast("App läuft NICHT in Electron.");
       }
 
-      electronService.ipcRenderer.on("befehl-von-electron", (event, arg) => {
+      electronService.ipcRenderer.on("befehl-von-electron", (event, args) => {
 
-        this.zeigeDialog("Info", "Befehl von Electron-Main erhalten!");
+        this.zeigeDialog("Info", `Befehl von Electron-Main erhalten mit Argument "${args}".`);
       });
   }
 
