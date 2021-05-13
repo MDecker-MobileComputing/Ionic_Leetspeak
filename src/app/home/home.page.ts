@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular';
+import { ElectronService } from 'ngx-electron';
 
 @Component({
   selector: 'app-home',
@@ -14,10 +15,42 @@ export class HomePage {
   /** String-Variable ist an TextArea zur Darstellung Übersetzungsergebnis gebunden. */
   private ausgabeText = "";
 
+  /** Variable hat genau dann den Wert `true`, wenn die App als Electron-App ausgeführt wird. */
+  private laueftInElectron = false;
+
   /**
    * Konstruktor für Dependency Injection.
+   *
+   * API-Dokuk für Klasse `ElectronService`: https://www.npmjs.com/package/ngx-electron
    */
-  constructor(private alertCtrl: AlertController) {}
+  constructor(private alertCtrl: AlertController,
+              private toastController: ToastController,
+              private electronService: ElectronService) {
+
+      this.laueftInElectron = electronService.isElectronApp;
+      if (this.laueftInElectron) {
+
+        let betriebssystem = "";
+        if (electronService.isWindows) {
+
+          betriebssystem = "Windows";
+
+        } else if (electronService.isLinux) {
+
+          betriebssystem = "Linux";
+
+        } else if (electronService.isMacOS) {
+
+          betriebssystem = "MacOS";
+
+        } else {
+
+          betriebssystem = "unbekanntes Betriebssystem";
+        }
+
+        this.zeigeToast(`App läuft in Electron (${betriebssystem}).`);
+      }
+  }
 
   /**
    * Event-Handler-Methode für Button "Text in Leetspeak umwandeln".
@@ -84,6 +117,22 @@ export class HomePage {
           });
 
     await meinAlert.present();
+  }
+
+  /**
+   * Hilfsmethode: Toast anzeigen, siehe auch https://ionicframework.com/docs/api/toast
+   *
+   * @param nachricht Im Toast anzuzeigender Text
+   */
+   async zeigeToast(nachricht: string) {
+
+    const toast =
+          await this.toastController.create({
+              message : nachricht,
+              duration: 2000  // 2000 ms = 2 seconds
+          });
+
+    await toast.present();
   }
 
 }
