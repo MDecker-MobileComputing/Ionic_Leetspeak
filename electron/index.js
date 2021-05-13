@@ -48,6 +48,7 @@ function erzeugeEigenesMenue() {
         label: "Menü",
         submenu: [
             {label: "Hilfeseite im Browser öffnen", click(){ shell.openExternal(URL_HILFESEITE); } },
+            {type: "separator"},
             {label: "Beenden", click(){ app.quit(); } },
         ]
     }
