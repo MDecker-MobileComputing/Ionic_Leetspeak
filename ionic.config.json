@@ -1,0 +1,7 @@
+{
+  "name": "leetspeak",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
