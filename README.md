@@ -19,6 +19,13 @@ see [this README file in German](https://github.com/MDecker-MobileComputing/Ioni
 
 <br>
 
+Workaround needed to get app running with package `ngx-electron`:
+Increased version of package `@types/node` listed under `devDependencies` to version `15.0.3`, which was the latest
+version according to [this page on *npmjs.com*](https://www.npmjs.com/package/@types/node) when the app was developed;
+see also [this answer on *stackoverflow.com*](https://stackoverflow.com/a/66596834/1364368)
+
+<br>
+
 ----
 
 ## License ##
