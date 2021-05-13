@@ -10,6 +10,7 @@ const { CapacitorSplashScreen, configCapacitor } = require('@capacitor/electron'
 const path = require('path');
 const shell = require('electron').shell
 
+
 const URL_HILFESEITE = "https://github.com/MDecker-MobileComputing/Ionic_Leetspeak/blob/master/README.md";
 
 // Place holders for our windows so they don't get garbage collected.
@@ -54,6 +55,8 @@ function erzeugeEigenesMenue() {
             {label: "Hilfeseite im Browser öffnen", click(){ shell.openExternal(URL_HILFESEITE); } },
             {label: "Über diese App", click() { dialog.showMessageBox(aboutDialogOptionen); } },
             {type: "separator"},
+            {label: "Befehl an Ionic-App", click() { mainWindow.webContents.send("befehl-von-electron", "Lorem", "Ipsum"); } },
+            {type: "separator"},
             {label: "Beenden", click(){ app.quit(); } },
         ]
     }
@@ -94,7 +97,6 @@ async function createWindow () {
 
   erzeugeEigenesMenue();
 }
-
 
 
 // This method will be called when Electron has finished
