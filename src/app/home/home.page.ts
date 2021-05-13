@@ -97,8 +97,9 @@ export class HomePage {
   }
 
   /**
-   * Event-Handler-Methode für Button "In Zwischenablage kopieren"; dieser Button
-   * ist nur sichtbar, wenn die App in Electron läuft.
+   * Event-Handler-Methode für Button "In Zwischenablage kopieren"; dieser Button ist
+   * nur sichtbar, wenn die App in Electron läuft und gerade  ein Übersetzungsergebnis
+   * angezeigt wird.
    */
   private inElectronClipboardKopieren() {
 
