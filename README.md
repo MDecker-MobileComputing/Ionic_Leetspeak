@@ -19,6 +19,15 @@ see [this README file in German](https://github.com/MDecker-MobileComputing/Ioni
 
 <br>
 
+For building the Electron app for different operating systems one of the following commands can be executed:
+```
+npm run electron4win
+npm run electron4mac
+npm run electron4linux
+```
+
+<br>
+
 Workaround needed to get app running with package `ngx-electron`:
 Increased version of package `@types/node` listed under `devDependencies` to version `15.0.3`, which was the latest
 version according to [this page on *npmjs.com*](https://www.npmjs.com/package/@types/node) when the app was developed;

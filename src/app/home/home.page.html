@@ -30,4 +30,10 @@
     </ion-item>
   </ion-list>
 
+  <div *ngIf="laueftInElectron">
+    <ion-button expand="block"
+                color="secondary"
+                (click)="inElectronClipboardKopieren()">In Zwischenablage kopieren</ion-button>
+  </div>
+
 </ion-content>
