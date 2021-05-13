@@ -1,8 +1,16 @@
+/**
+ * Änderungen in dieser Datei werden bei erneutem Start der App
+ * mit `npx cap open electron` wirksam.
+ */
+
 const { app, BrowserWindow, Menu } = require('electron');
 const isDevMode = require('electron-is-dev');
 const { CapacitorSplashScreen, configCapacitor } = require('@capacitor/electron');
 
 const path = require('path');
+const shell = require('electron').shell
+
+const URL_HILFESEITE = "https://github.com/MDecker-MobileComputing/Ionic_Leetspeak/blob/master/README.md";
 
 // Place holders for our windows so they don't get garbage collected.
 let mainWindow = null;
@@ -11,7 +19,7 @@ let mainWindow = null;
 let splashScreen = null;
 
 //Change this if you do not wish to have a splash screen
-let useSplashScreen = true;
+let useSplashScreen = true;            { }
 
 // Create simple menu for easy devtools access, and for demo
 const menuTemplateDev = [
@@ -27,6 +35,25 @@ const menuTemplateDev = [
     ],
   },
 ];
+
+
+/**
+ * Eigenes Menü für Electron-App definieren, siehe auch
+ * https://coursetro.com/posts/code/119/Working-with-Electron-Menus---Tutorial
+ */
+function erzeugeEigenesMenue() {
+
+  let menu = Menu.buildFromTemplate([
+    {
+        label: "Menü",
+        submenu: [
+            {label: "Hilfeseite im Browser öffnen", click(){ shell.openExternal(URL_HILFESEITE); } },
+            {label: "Beenden", click(){ app.quit(); } },
+        ]
+    }
+  ]);
+  Menu.setApplicationMenu(menu);
+}
 
 async function createWindow () {
   // Define our main window size
@@ -59,7 +86,10 @@ async function createWindow () {
     });
   }
 
+  erzeugeEigenesMenue();
 }
+
+
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.

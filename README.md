@@ -35,6 +35,11 @@ see also [this answer on *stackoverflow.com*](https://stackoverflow.com/a/665968
 
 <br>
 
+Custom menus for Electron app are defined in function `erzeugeEigenesMenue()` in file
+[electron/index.js](electron/index.js).
+
+<br>
+
 ----
 
 ## License ##
