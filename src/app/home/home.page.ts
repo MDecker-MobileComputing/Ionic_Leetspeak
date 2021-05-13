@@ -49,6 +49,10 @@ export class HomePage {
         }
 
         this.zeigeToast(`App läuft in Electron (${betriebssystem}).`);
+
+      } else {
+
+        this.zeigeToast("App läuft NICHT in Electron.");
       }
   }
 
