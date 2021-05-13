@@ -3,7 +3,7 @@
  * mit `npx cap open electron` wirksam.
  */
 
-const { app, BrowserWindow, Menu } = require('electron');
+const { app, BrowserWindow, Menu, dialog } = require('electron');
 const isDevMode = require('electron-is-dev');
 const { CapacitorSplashScreen, configCapacitor } = require('@capacitor/electron');
 
@@ -36,6 +36,10 @@ const menuTemplateDev = [
   },
 ];
 
+const aboutDialogOptionen  = {
+  buttons: ["Okay"],
+  message: "Leetspeak-Translator ist eine in Electron verpackte Ionic-App."
+ };
 
 /**
  * Eigenes Menü für Electron-App definieren, siehe auch
@@ -48,6 +52,7 @@ function erzeugeEigenesMenue() {
         label: "Menü",
         submenu: [
             {label: "Hilfeseite im Browser öffnen", click(){ shell.openExternal(URL_HILFESEITE); } },
+            {label: "Über diese App", click() { dialog.showMessageBox(aboutDialogOptionen); } },
             {type: "separator"},
             {label: "Beenden", click(){ app.quit(); } },
         ]
