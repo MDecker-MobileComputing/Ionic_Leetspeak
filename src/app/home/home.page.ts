@@ -24,13 +24,39 @@ export class HomePage {
    */
   private onUebersetzen() {
 
-    const text = this.eingabeText.trim();
-    if (text.length === 0) {
+    const inputText = this.eingabeText.trim();
+    if (inputText.length === 0) {
 
       this.zeigeDialog("Ungültige Eingabe", "Bitte zu übersetztenden Text eingeben.");
     }
 
-    this.ausgabeText = "";
+    this.ausgabeText = this.buchstabenErsetzen(inputText);
+  }
+
+  /**
+   * Methode nicht Buchstabenersetzungen für "Übersetzung" nach Leetspeak vor.
+   * Die Übersetzungsregeln entsprechen "Level 1" von https://md5decrypt.net/en/Leet-translator/
+   * (Ersetzung von "r" auf "2" wurde aber nicht übernommen).
+   *
+   * Für die Ersetzungen werden reguläre Ausdrücke der Form `/a/gi` verwendet, wobei `a` der zu
+   * ersetzende Buchstabe ist. Damit auch mehrere Vorkommen in einem String übersetzt werden,
+   * wird mit `g` die Option "global" gesetzt, und mit "i" wird die Unterscheidung von
+   * Groß-/Kleinschreibung ausgeschaltet.
+   *
+   * @param eingabe Zu übersetzender Text.
+   * @returns Als Übersetzungsergebnis anzuzeigender Text.
+   */
+  private buchstabenErsetzen(eingabe: string): string {
+
+    return eingabe.replace(/a/gi, "4")
+                  .replace(/b/gi, "8")
+                  .replace(/e/gi, "3")
+                  .replace(/g/gi, "9")
+                  .replace(/i/gi, "1")
+                  .replace(/l/gi, "1") // auch "i" wird schon auf Ziffer "1" abgebildet
+                  .replace(/o/gi, "0")
+                  .replace(/s/gi, "5")
+                  .replace(/z/gi, "2");
   }
 
   /**
