@@ -102,7 +102,15 @@ export class HomePage {
    */
   private inElectronClipboardKopieren() {
 
-    this.zeigeDialog("Info", "Funktion noch nicht implementiert.");
+    if (this.ausgabeText.length === 0) {
+
+      this.zeigeDialog("Fehler", "Es gibt gerade keinen übersetzten Text zum Kopieren in die Zwischenablage.");
+      return;
+    }
+
+    this.electronService.clipboard.writeText(this.ausgabeText);
+
+    this.zeigeDialog("Info", "Übersetzung wurde in die Zwischenablage kopiert.");
   }
 
   /**
