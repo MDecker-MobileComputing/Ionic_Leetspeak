@@ -13,6 +13,14 @@ to [Leetspeak](https://en.wikipedia.org/wiki/Leet), which is realized by simple 
 
 ----
 
+## Configure Electron for an Ionic project ##
+
+see [this README file in German](https://github.com/MDecker-MobileComputing/Ionic_Wuerfel/blob/electron/README_electron.md)
+
+<br>
+
+----
+
 ## License ##
 
 See the [LICENSE file](LICENSE.md) for license rights and limitations (BSD 3-Clause License) for the files in this repository.
