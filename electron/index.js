@@ -109,7 +109,8 @@ async function createWindow () {
 }
 
 /**
- * Event-Handler für Befehle von Ionic definieren.
+ * Event-Handler für Empfang von "Befehl" von Ionic, nämlich um das aktuelle
+ * Übersetzungsergebnis als lokale Datei zu speichern.
  *
  * Achtung: die Methode `dialog.showSaveDialog()` ist eine asynchrone Methode,
  * die deshalb mit `await` aufgerufen wird; deshalb muss die Callback-Funktion
@@ -117,7 +118,12 @@ async function createWindow () {
  */
 ipcMain.on("befehl-von-ionic", async (event, uebersetzungsergebnis) => {
 
-  const saveDialogErgebnis = await dialog.showSaveDialog(null);
+  const saveDialogOptionen = {
+    titel: "Speichern Textdatei mit Übersetzungsergebnis",
+    defaultPath: app.getPath("documents") + "/Leetspeek-Ergebnis.txt",
+  }
+
+  const saveDialogErgebnis = await dialog.showSaveDialog(saveDialogOptionen);
   if (saveDialogErgebnis.canceled) {
 
     dialog.showMessageBox({ buttons: ["Ok"], message: `Vorgang abgebrochen.` });
@@ -125,13 +131,12 @@ ipcMain.on("befehl-von-ionic", async (event, uebersetzungsergebnis) => {
   }
 
   const zieldatei = saveDialogErgebnis.filePath;
-  dialog.showMessageBox({ buttons: ["Ok"], message: "Zieldatei gewählt: " + zieldatei });
 
   try {
 
     fs.writeFileSync(zieldatei, uebersetzungsergebnis + "\n", "utf-8");
 
-    dialog.showMessageBox({ buttons: ["Ok"], message: `Datei ${zieldatei} wurde erstellt.` });
+    dialog.showMessageBox({ buttons: ["Ok"], message: `Datei "${zieldatei}" wurde erstellt.` });
   }
   catch(ex) {
 
