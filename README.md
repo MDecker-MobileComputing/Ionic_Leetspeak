@@ -13,6 +13,16 @@ to [Leetspeak](https://en.wikipedia.org/wiki/Leet), which is realized by simple 
 
 ----
 
+## Screenshots ##
+
+Screenshot of app when compiled for Android:
+
+![Screenshot: Android App](screenshot_AndroidApp.png)
+
+<br>
+
+----
+
 ## Configure Electron for an Ionic project ##
 
 See [this README file in German](https://github.com/MDecker-MobileComputing/Ionic_Wuerfel/blob/electron/README_electron.md)
