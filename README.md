@@ -15,7 +15,15 @@ to [Leetspeak](https://en.wikipedia.org/wiki/Leet), which is realized by simple 
 
 ## Configure Electron for an Ionic project ##
 
-see [this README file in German](https://github.com/MDecker-MobileComputing/Ionic_Wuerfel/blob/electron/README_electron.md)
+See [this README file in German](https://github.com/MDecker-MobileComputing/Ionic_Wuerfel/blob/electron/README_electron.md)
+
+<br>
+
+Run the following script contained in the root folder of this repository to preview the Electron app:
+```
+./vorschauElectronApp.sh
+```
+The script will also perform the update needed when something in the Ionic code was changed.
 
 <br>
 

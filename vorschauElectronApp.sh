@@ -1,7 +1,5 @@
 #!/bin/bash
 
 ionic build
-ionic capacitor sync 
+ionic capacitor sync
 npx cap open electron
-
-
