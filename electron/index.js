@@ -38,7 +38,7 @@ const menuTemplateDev = [
 
 const aboutDialogOptionen  = {
   buttons: ["Okay"],
-  message: "Leetspeak-Translator ist eine in Electron verpackte Ionic-App."
+  message: "Leetspeak-Translator ist eine in Electron verpackte Ionic-App.\n\n2021 by MDecker-MobileComputing"
  };
 
 /**
@@ -64,15 +64,10 @@ function erzeugeEigenesMenue() {
       {label: "Über diese App", click: onUeberMenu },
   ];
 
-  const menu = Menu.buildFromTemplate([
-    {
-      label: "Aktionen",
-      submenu: aktionenMenuArray
-    }, {
-      label: "Hilfe",
-      submenu: hilfeMenuArray
-    }
-  ]);
+  const aktionenMenu = { label: "Aktionen", submenu: aktionenMenuArray };
+  const hilfeMenu    = { label: "Hilfe", submenu: hilfeMenuArray };
+
+  const menu = Menu.buildFromTemplate([ aktionenMenu, hilfeMenu ]);
 
   Menu.setApplicationMenu(menu);
 }
