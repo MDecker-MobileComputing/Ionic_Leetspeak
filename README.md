@@ -1,4 +1,4 @@
-# Leetspeak #
+# Leetspeak app (Ionic app in Electron container) #
 
 Simple Ionic app with Angular, to demonstrate how an Ionic app can be
 packaged into an [Electron app](https://www.electronjs.org/).
@@ -33,6 +33,7 @@ npm run electron4win
 npm run electron4mac
 npm run electron4linux
 ```
+These commands are defined under `script` in file [package.json](./package.json).
 
 <br>
 
