@@ -6,6 +6,7 @@
 const { app, BrowserWindow, Menu, dialog, ipcMain } = require('electron');
 const { CapacitorSplashScreen, configCapacitor }    = require('@capacitor/electron');
 const isDevMode = require('electron-is-dev');
+const fs = require('fs');
 
 const path  = require('path');
 const shell = require('electron').shell
@@ -35,7 +36,7 @@ const menuTemplateDev = [
 ];
 
 const aboutDialogOptionen  = {
-  buttons: ["Okay"],
+  buttons: ["OK"],
   message: "Leetspeak-Translator ist eine in Electron verpackte Ionic-App.\n\n2021 by MD"
 };
 
@@ -45,10 +46,10 @@ const aboutDialogOptionen  = {
  */
 function erzeugeEigenesMenue() {
 
-  const onHilfeMenu   = function(){ shell.openExternal(URL_HILFESEITE); };
-  const onUeberMenu   = function(){ dialog.showMessageBox(aboutDialogOptionen); };
   const onLoeschMenu  = function(){ mainWindow.webContents.send("befehl-von-electron", "Dummy-Argument"); };
   const onBeendenMenu = function(){ app.quit(); };
+  const onHilfeMenu   = function(){ shell.openExternal(URL_HILFESEITE); };
+  const onUeberMenu   = function(){ dialog.showMessageBox(aboutDialogOptionen); };
 
   const aktionenMenuArray = [
       {label: "Formular löschen", click: onLoeschMenu, accelerator: "CmdOrCtrl+L" },
@@ -109,12 +110,17 @@ async function createWindow () {
  */
 ipcMain.on("befehl-von-ionic", (event, uebersetzungsergebnis) => {
 
-  const dialogOptionen  = {
-    buttons: ["Okay"],
-    message: `Nachricht von Ionic erhalten: "${uebersetzungsergebnis}"`
-  };
+  try {
 
-  dialog.showMessageBox(dialogOptionen);
+    fs.writeFileSync("/home/michi/leet.txt", uebersetzungsergebnis, "utf-8");
+  }
+  catch(ex) {
+
+    dialog.showErrorBox("Fehler", "Datei konnte nicht geschrieben werden: " + ex);
+    return;
+  }
+
+  dialog.showMessageBox({ buttons: ["Ok"], message: "Datei wurde erstellt." });
 });
 
 // This method will be called when Electron has finished
