@@ -52,23 +52,28 @@ function erzeugeEigenesMenue() {
   const onLoeschMenu  = function(){ mainWindow.webContents.send("befehl-von-electron", "Lorem Ipsum"); };
   const onBeendenMenu = function(){ app.quit(); };
 
-  let menu = Menu.buildFromTemplate([
+  const aktionenMenuArray = [
+      {label: "Formular löschen", click: onLoeschMenu, accelerator: "CmdOrCtrl+L" },
+      {type:  "separator"},
+      {label: "Beenden", click: onBeendenMenu }
+  ];
+
+  const hilfeMenuArray = [
+      {label: "Hilfeseite im Browser öffnen", click: onHilfeMenu },
+      {type:  "separator" },
+      {label: "Über diese App", click: onUeberMenu },
+  ];
+
+  const menu = Menu.buildFromTemplate([
     {
-        label: "Aktionen",
-        submenu: [
-            {label: "Formular löschen", click: onLoeschMenu, accelerator: "CmdOrCtrl+L" },
-            {type:  "separator"},
-            {label: "Beenden", click: onBeendenMenu }
-        ]
+      label: "Aktionen",
+      submenu: aktionenMenuArray
     }, {
       label: "Hilfe",
-      submenu: [
-        {label: "Hilfeseite im Browser öffnen", click: onHilfeMenu },
-        {type:  "separator" },
-        {label: "Über diese App", click: onUeberMenu },
-      ]
+      submenu: hilfeMenuArray
     }
   ]);
+
   Menu.setApplicationMenu(menu);
 }
 
