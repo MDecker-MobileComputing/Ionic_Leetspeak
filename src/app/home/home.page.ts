@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { AlertController, ToastController } from '@ionic/angular';
 import { ElectronService } from 'ngx-electron';
 
@@ -25,7 +25,8 @@ export class HomePage {
    */
   constructor(private alertCtrl: AlertController,
               private toastController: ToastController,
-              private electronService: ElectronService) {
+              private electronService: ElectronService,
+              private ngZone: NgZone) {
 
       this.laueftInElectron = electronService.isElectronApp;
       if (this.laueftInElectron) {
@@ -48,18 +49,31 @@ export class HomePage {
           betriebssystem = "unbekanntes Betriebssystem";
         }
 
+        this.electronEventHandlerRegistrieren();
+
         this.zeigeToast(`App läuft in Electron (${betriebssystem}).`);
 
       } else {
 
         this.zeigeToast("App läuft NICHT in Electron.");
       }
-
-      electronService.ipcRenderer.on("befehl-von-electron", (event, args) => {
-
-        this.zeigeDialog("Info", `Befehl von Electron-Main erhalten mit Argument "${args}".`);
-      });
   }
+
+  /**
+   * Event-Handler für Befehle von Electron-Container registrieren.
+   *
+   * siehe auch
+   * * https://github.com/ThorstenHans/ngx-electron/issues/2
+   * * https://github.com/ThorstenHans/electron-ngx-sample/blob/master/src/components/kittendetails/kittendetails.ts#L28
+   */
+  private electronEventHandlerRegistrieren() {
+
+    this.electronService.ipcRenderer.on("befehl-von-electron", (event, args) => {
+
+      this.ngZone.run( () => { this.onLoeschen(); });
+    });
+  }
+
 
   /**
    * Event-Handler-Methode für Button "Text in Leetspeak umwandeln".
@@ -120,7 +134,8 @@ export class HomePage {
   }
 
   /**
-   * Event-Handler-Methode für Button "Text löschen".
+   * Event-Handler-Methode für Button "Text löschen". Wird auch ausgeführt, wenn Menüpunkt
+   * "Formular löschen" in Electron-Container ausgeführt wird.
    */
    private onLoeschen() {
 

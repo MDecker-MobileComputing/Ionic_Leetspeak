@@ -6,7 +6,7 @@ The function of the app is it to translate the text provided by the user
 to [Leetspeak](https://en.wikipedia.org/wiki/Leet), which is realized by simple letter substitutions.
 
 **Example:**
-* Input: *"The quick brown fox jumps over the lazy dog."*
+* Input:  *"The quick brown fox jumps over the lazy dog."*
 * Output: *"Th3 qu1ck 8r0wn f0x jump5 0v3r th3 142y d09."*
 
 <br>
@@ -35,8 +35,7 @@ see also [this answer on *stackoverflow.com*](https://stackoverflow.com/a/665968
 
 <br>
 
-Custom menus for Electron app are defined in function `erzeugeEigenesMenue()` in file
-[electron/index.js](electron/index.js).
+Custom menus for Electron app are defined in function `erzeugeEigenesMenue()` in file [electron/index.js](electron/index.js).
 
 <br>
 

@@ -54,9 +54,9 @@ function erzeugeEigenesMenue() {
         submenu: [
             {label: "Hilfeseite im Browser öffnen", click(){ shell.openExternal(URL_HILFESEITE); } },
             {label: "Über diese App", click() { dialog.showMessageBox(aboutDialogOptionen); } },
-            {type: "separator"},
-            {label: "Befehl an Ionic-App", click() { mainWindow.webContents.send("befehl-von-electron", "Lorem Ipsum"); } },
-            {type: "separator"},
+            {type:  "separator" },
+            {label: "Formular löschen", click() { mainWindow.webContents.send("befehl-von-electron", "Lorem Ipsum"); } },
+            {type:  "separator"},
             {label: "Beenden", click(){ app.quit(); } },
         ]
     }
