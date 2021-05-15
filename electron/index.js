@@ -4,14 +4,13 @@
  */
 
 const { app, BrowserWindow, Menu, dialog } = require('electron');
-const isDevMode = require('electron-is-dev');
 const { CapacitorSplashScreen, configCapacitor } = require('@capacitor/electron');
+const isDevMode = require('electron-is-dev');
 
 const path = require('path');
 const shell = require('electron').shell
 
-
-const URL_HILFESEITE = "https://github.com/MDecker-MobileComputing/Ionic_Leetspeak/blob/master/README.md";
+const URL_HILFESEITE = "https://github.com/MDecker-MobileComputing/Ionic_Leetspeak/blob/master/README.md#leetspeak-app-ionic-app-in-electron-container";
 
 // Place holders for our windows so they don't get garbage collected.
 let mainWindow = null;
@@ -20,7 +19,7 @@ let mainWindow = null;
 let splashScreen = null;
 
 //Change this if you do not wish to have a splash screen
-let useSplashScreen = true;            { }
+let useSplashScreen = true;
 
 // Create simple menu for easy devtools access, and for demo
 const menuTemplateDev = [
@@ -48,16 +47,21 @@ const aboutDialogOptionen  = {
  */
 function erzeugeEigenesMenue() {
 
+  const onHilfeMenu   = function(){ shell.openExternal(URL_HILFESEITE); };
+  const onUeberMenu   = function(){ dialog.showMessageBox(aboutDialogOptionen); };
+  const onLoeschMenu  = function(){ mainWindow.webContents.send("befehl-von-electron", "Lorem Ipsum"); };
+  const onBeendenMenu = function(){ app.quit(); };
+
   let menu = Menu.buildFromTemplate([
     {
         label: "Menü",
         submenu: [
-            {label: "Hilfeseite im Browser öffnen", click(){ shell.openExternal(URL_HILFESEITE); } },
-            {label: "Über diese App", click() { dialog.showMessageBox(aboutDialogOptionen); } },
+            {label: "Hilfeseite im Browser öffnen", click: onHilfeMenu },
+            {label: "Über diese App", click: onUeberMenu },
             {type:  "separator" },
-            {label: "Formular löschen", click() { mainWindow.webContents.send("befehl-von-electron", "Lorem Ipsum"); } },
+            {label: "Formular löschen", click: onLoeschMenu },
             {type:  "separator"},
-            {label: "Beenden", click(){ app.quit(); } },
+            {label: "Beenden", click: onBeendenMenu }
         ]
     }
   ]);
@@ -65,7 +69,7 @@ function erzeugeEigenesMenue() {
 }
 
 async function createWindow () {
-  // Define our main window size
+
   mainWindow = new BrowserWindow({
     height: 920,
     width: 1600,
