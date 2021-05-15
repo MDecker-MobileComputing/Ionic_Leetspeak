@@ -27,7 +27,7 @@ The script will also perform the update needed when something in the Ionic code 
 
 <br>
 
-For building the Electron app for different operating systems one of the following commands can be executed (before this app must have been executed with `npx cap open electron`):
+For building the Electron app for different operating systems one of the following commands can be executed (before this the app must have been executed with `npx cap open electron`):
 ```
 npm run electron4win
 npm run electron4mac
