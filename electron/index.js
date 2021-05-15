@@ -8,8 +8,9 @@
 
 const { app, BrowserWindow, Menu, dialog, ipcMain } = require('electron');
 const { CapacitorSplashScreen, configCapacitor }    = require('@capacitor/electron');
+
 const isDevMode = require('electron-is-dev');
-const fs = require('fs');
+const fs        = require('fs');
 
 const path  = require('path');
 const shell = require('electron').shell
