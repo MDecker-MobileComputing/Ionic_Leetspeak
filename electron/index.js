@@ -1,6 +1,9 @@
 /**
  * Änderungen in dieser Datei werden bei erneutem Start der App
  * mit `npx cap open electron` wirksam.
+ *
+ * ACHTUNG: Wenn diese App einen Syntaxfehler enthält, dann bleibt
+ * der Aufruf von `npx cap open electron` ohne Fehlermeldung hängen!
  */
 
 const { app, BrowserWindow, Menu, dialog, ipcMain } = require('electron');
@@ -107,12 +110,19 @@ async function createWindow () {
 
 /**
  * Event-Handler für Befehle von Ionic definieren.
+ *
+ * Achtung: die Methode `dialog.showSaveDialog()` ist eine asynchrone Methode,
+ * die deshalb mit `await` aufgerufen wird; deshalb muss die Callback-Funktion
+ * selbst mit `async` deklariert werden.
  */
 ipcMain.on("befehl-von-ionic", async (event, uebersetzungsergebnis) => {
 
   const saveDialogErgebnis = await dialog.showSaveDialog(null);
+  if (saveDialogErgebnis.canceled) {
 
-  if (saveDialogErgebnis.canceled) { return; }
+    dialog.showMessageBox({ buttons: ["Ok"], message: `Vorgang abgebrochen.` });
+    return;
+  }
 
   const zieldatei = saveDialogErgebnis.filePath;
   dialog.showMessageBox({ buttons: ["Ok"], message: "Zieldatei gewählt: " + zieldatei });
