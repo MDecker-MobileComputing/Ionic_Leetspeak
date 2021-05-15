@@ -3,11 +3,11 @@
  * mit `npx cap open electron` wirksam.
  */
 
-const { app, BrowserWindow, Menu, dialog } = require('electron');
-const { CapacitorSplashScreen, configCapacitor } = require('@capacitor/electron');
+const { app, BrowserWindow, Menu, dialog, ipcMain } = require('electron');
+const { CapacitorSplashScreen, configCapacitor }    = require('@capacitor/electron');
 const isDevMode = require('electron-is-dev');
 
-const path = require('path');
+const path  = require('path');
 const shell = require('electron').shell
 
 const URL_HILFESEITE = "https://github.com/MDecker-MobileComputing/Ionic_Leetspeak/blob/master/README.md#leetspeak-app-ionic-app-in-electron-container";
@@ -28,9 +28,7 @@ const menuTemplateDev = [
     submenu: [
       {
         label: 'Open Dev Tools',
-        click() {
-          mainWindow.openDevTools();
-        },
+        click() { mainWindow.openDevTools(); },
       },
     ],
   },
@@ -39,7 +37,7 @@ const menuTemplateDev = [
 const aboutDialogOptionen  = {
   buttons: ["Okay"],
   message: "Leetspeak-Translator ist eine in Electron verpackte Ionic-App.\n\n2021 by MDecker-MobileComputing"
- };
+};
 
 /**
  * Eigenes Menü für Electron-App definieren, siehe auch
@@ -49,7 +47,7 @@ function erzeugeEigenesMenue() {
 
   const onHilfeMenu   = function(){ shell.openExternal(URL_HILFESEITE); };
   const onUeberMenu   = function(){ dialog.showMessageBox(aboutDialogOptionen); };
-  const onLoeschMenu  = function(){ mainWindow.webContents.send("befehl-von-electron", "Lorem Ipsum"); };
+  const onLoeschMenu  = function(){ mainWindow.webContents.send("befehl-von-electron", "Dummy-Argument"); };
   const onBeendenMenu = function(){ app.quit(); };
 
   const aktionenMenuArray = [
@@ -65,7 +63,7 @@ function erzeugeEigenesMenue() {
   ];
 
   const aktionenMenu = { label: "Aktionen", submenu: aktionenMenuArray };
-  const hilfeMenu    = { label: "Hilfe", submenu: hilfeMenuArray };
+  const hilfeMenu    = { label: "Hilfe"   , submenu: hilfeMenuArray    };
 
   const menu = Menu.buildFromTemplate([ aktionenMenu, hilfeMenu ]);
 
@@ -106,6 +104,15 @@ async function createWindow () {
   erzeugeEigenesMenue();
 }
 
+ipcMain.on("befehl-von-ionic", (event, uebersetzungsergebnis) => {
+
+  const dialogOptionen  = {
+    buttons: ["Okay"],
+    message: `Nachricht von Ionic erhalten: ${uebersetzungsergebnis}`
+  };
+
+  dialog.showMessageBox(dialogOptionen);
+});
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -128,5 +135,3 @@ app.on('activate', function () {
     createWindow();
   }
 });
-
-// Define any IPC or other custom functionality below here

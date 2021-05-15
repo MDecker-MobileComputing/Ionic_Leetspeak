@@ -117,20 +117,24 @@ export class HomePage {
 
   /**
    * Event-Handler-Methode für Button "In Zwischenablage kopieren"; dieser Button ist
-   * nur sichtbar, wenn die App in Electron läuft und gerade  ein Übersetzungsergebnis
+   * nur sichtbar, wenn die App in Electron läuft und gerade ein Übersetzungsergebnis
    * angezeigt wird.
    */
   private inElectronClipboardKopieren() {
 
-    if (this.ausgabeText.length === 0) {
-
-      this.zeigeDialog("Fehler", "Es gibt gerade keinen übersetzten Text zum Kopieren in die Zwischenablage.");
-      return;
-    }
-
     this.electronService.clipboard.writeText(this.ausgabeText);
 
     this.zeigeDialog("Info", "Übersetzung wurde in die Zwischenablage kopiert.");
+  }
+
+  /**
+   * Event-Handler-Methode für Button "Als lokale Datei speichern"; dieser Button ist
+   * nur sichtbar, wenn die App in Electron läuft und gerade ein Übersetzungsergebnis
+   * angezeigt wird.
+   */
+  private dateiViaElectronSpeichern() {
+
+    this.electronService.ipcRenderer.send("befehl-von-ionic", this.ausgabeText);
   }
 
   /**
