@@ -36,7 +36,7 @@ const menuTemplateDev = [
 
 const aboutDialogOptionen  = {
   buttons: ["Okay"],
-  message: "Leetspeak-Translator ist eine in Electron verpackte Ionic-App.\n\n2021 by MDecker-MobileComputing"
+  message: "Leetspeak-Translator ist eine in Electron verpackte Ionic-App.\n\n2021 by MD"
 };
 
 /**
@@ -104,11 +104,14 @@ async function createWindow () {
   erzeugeEigenesMenue();
 }
 
+/**
+ * Event-Handler für Befehle von Ionic definieren.
+ */
 ipcMain.on("befehl-von-ionic", (event, uebersetzungsergebnis) => {
 
   const dialogOptionen  = {
     buttons: ["Okay"],
-    message: `Nachricht von Ionic erhalten: ${uebersetzungsergebnis}`
+    message: `Nachricht von Ionic erhalten: "${uebersetzungsergebnis}"`
   };
 
   dialog.showMessageBox(dialogOptionen);

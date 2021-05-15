@@ -124,7 +124,10 @@ export class HomePage {
 
     this.electronService.clipboard.writeText(this.ausgabeText);
 
-    this.zeigeDialog("Info", "Übersetzung wurde in die Zwischenablage kopiert.");
+    const anzZeichen = this.ausgabeText.length;
+
+    const nachricht = `Übersetzung mit ${anzZeichen} Zeichen Länge wurde in die Zwischenablage kopiert.`;
+    this.zeigeDialog("Erfolg", nachricht);
   }
 
   /**
