@@ -108,19 +108,26 @@ async function createWindow () {
 /**
  * Event-Handler für Befehle von Ionic definieren.
  */
-ipcMain.on("befehl-von-ionic", (event, uebersetzungsergebnis) => {
+ipcMain.on("befehl-von-ionic", async (event, uebersetzungsergebnis) => {
+
+  const saveDialogErgebnis = await dialog.showSaveDialog(null);
+
+  if (saveDialogErgebnis.canceled) { return; }
+
+  const zieldatei = saveDialogErgebnis.filePath;
+  dialog.showMessageBox({ buttons: ["Ok"], message: "Zieldatei gewählt: " + zieldatei });
 
   try {
 
-    fs.writeFileSync("/home/michi/leet.txt", uebersetzungsergebnis, "utf-8");
+    fs.writeFileSync(zieldatei, uebersetzungsergebnis + "\n", "utf-8");
+
+    dialog.showMessageBox({ buttons: ["Ok"], message: `Datei ${zieldatei} wurde erstellt.` });
   }
   catch(ex) {
 
     dialog.showErrorBox("Fehler", "Datei konnte nicht geschrieben werden: " + ex);
     return;
   }
-
-  dialog.showMessageBox({ buttons: ["Ok"], message: "Datei wurde erstellt." });
 });
 
 // This method will be called when Electron has finished
