@@ -19,6 +19,10 @@ See [this README file in German](https://github.com/MDecker-MobileComputing/Ioni
 
 <br>
 
+If in your local clone there is no subfolder `npm_modules` in folder `electron`, then execute `npm install` in this folder.
+
+<br>
+
 Run the following script contained in the root folder of this repository to preview the Electron app:
 ```
 ./vorschauElectronApp.sh
