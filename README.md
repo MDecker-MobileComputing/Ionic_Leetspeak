@@ -17,7 +17,9 @@ to [Leetspeak](https://en.wikipedia.org/wiki/Leet), which is realized by simple 
 
 Screenshot of app when compiled for Android:
 
-![Screenshot: Android App](screenshot_AndroidApp.png)
+![Screenshot: App for Android](screenshot_AndroidApp.png)
+
+![Screenshot: App for Windows](screenshot_WindowsApp.png)
 
 <br>
 
