@@ -54,15 +54,19 @@ function erzeugeEigenesMenue() {
 
   let menu = Menu.buildFromTemplate([
     {
-        label: "Menü",
+        label: "Aktionen",
         submenu: [
-            {label: "Hilfeseite im Browser öffnen", click: onHilfeMenu },
-            {label: "Über diese App", click: onUeberMenu },
-            {type:  "separator" },
-            {label: "Formular löschen", click: onLoeschMenu },
+            {label: "Formular löschen", click: onLoeschMenu, accelerator: "CmdOrCtrl+L" },
             {type:  "separator"},
             {label: "Beenden", click: onBeendenMenu }
         ]
+    }, {
+      label: "Hilfe",
+      submenu: [
+        {label: "Hilfeseite im Browser öffnen", click: onHilfeMenu },
+        {type:  "separator" },
+        {label: "Über diese App", click: onUeberMenu },
+      ]
     }
   ]);
   Menu.setApplicationMenu(menu);
