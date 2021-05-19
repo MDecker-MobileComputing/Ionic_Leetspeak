@@ -19,6 +19,10 @@ Screenshot of app when compiled for Android:
 
 ![Screenshot: App for Android](screenshot_AndroidApp.png)
 
+<br>
+
+Electron app compiled for Windows:
+
 ![Screenshot: App for Windows](screenshot_WindowsApp.png)
 
 <br>
