@@ -1,5 +1,6 @@
 import { Component, NgZone } from '@angular/core';
 import { AlertController, ToastController } from '@ionic/angular';
+import { ElectronService } from 'ngx-electron';
 
 @Component({
   selector: 'app-home',
@@ -9,11 +10,13 @@ import { AlertController, ToastController } from '@ionic/angular';
 export class HomePage {
 
   /** String-Variable ist an TextArea zur Eingabe des zu übersetzenden Texts gebunden. */
-  public eingabeText = "";
+  private eingabeText = "";
 
   /** String-Variable ist an TextArea zur Darstellung Übersetzungsergebnis gebunden. */
-  public ausgabeText = "";
+  private ausgabeText = "";
 
+  /** Variable hat genau dann den Wert `true`, wenn die App als Electron-App ausgeführt wird. */
+  private laueftInElectron = false;
 
   /**
    * Konstruktor für Dependency Injection.
@@ -21,8 +24,56 @@ export class HomePage {
    * API-Doku für Klasse `ElectronService`: https://www.npmjs.com/package/ngx-electron
    */
   constructor(private alertCtrl: AlertController,
-              private toastController: ToastController ) {
+              private toastController: ToastController,
+              private electronService: ElectronService,
+              private ngZone: NgZone) {
+
+      this.laueftInElectron = electronService.isElectronApp;
+      if (this.laueftInElectron) {
+
+        let betriebssystem = "";
+        if (electronService.isWindows) {
+
+          betriebssystem = "Windows";
+
+        } else if (electronService.isLinux) {
+
+          betriebssystem = "Linux";
+
+        } else if (electronService.isMacOS) {
+
+          betriebssystem = "MacOS";
+
+        } else {
+
+          betriebssystem = "unbekanntes Betriebssystem";
+        }
+
+        this.electronEventHandlerRegistrieren();
+
+        this.zeigeToast(`App läuft in Electron (${betriebssystem}).`);
+
+      } else {
+
+        this.zeigeToast("App läuft NICHT in Electron.");
+      }
   }
+
+  /**
+   * Event-Handler für Befehle von Electron-Container registrieren.
+   *
+   * siehe auch
+   * * https://github.com/ThorstenHans/ngx-electron/issues/2
+   * * https://github.com/ThorstenHans/electron-ngx-sample/blob/master/src/components/kittendetails/kittendetails.ts#L28
+   */
+  private electronEventHandlerRegistrieren() {
+
+    this.electronService.ipcRenderer.on("befehl-von-electron", (event, args) => {
+
+      this.ngZone.run( () => { this.onLoeschen(); });
+    });
+  }
+
 
   /**
    * Event-Handler-Methode für Button "Text in Leetspeak umwandeln".
@@ -62,6 +113,31 @@ export class HomePage {
                   .replace(/o/gi, "0")
                   .replace(/s/gi, "5")
                   .replace(/z/gi, "2");
+  }
+
+  /**
+   * Event-Handler-Methode für Button "In Zwischenablage kopieren"; dieser Button ist
+   * nur sichtbar, wenn die App in Electron läuft und gerade ein Übersetzungsergebnis
+   * angezeigt wird.
+   */
+  private inElectronClipboardKopieren() {
+
+    this.electronService.clipboard.writeText(this.ausgabeText);
+
+    const anzZeichen = this.ausgabeText.length;
+
+    const nachricht = `Übersetzung mit ${anzZeichen} Zeichen Länge wurde in die Zwischenablage kopiert.`;
+    this.zeigeDialog("Erfolg", nachricht);
+  }
+
+  /**
+   * Event-Handler-Methode für Button "Als lokale Datei speichern"; dieser Button ist
+   * nur sichtbar, wenn die App in Electron läuft und gerade ein Übersetzungsergebnis
+   * angezeigt wird.
+   */
+  private dateiViaElectronSpeichern() {
+
+    this.electronService.ipcRenderer.send("befehl-von-ionic", this.ausgabeText);
   }
 
   /**

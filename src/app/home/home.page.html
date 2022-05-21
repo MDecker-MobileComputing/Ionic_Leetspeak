@@ -30,11 +30,9 @@
   </ion-list>
 
   <div *ngIf="laueftInElectron && ausgabeText.trim().length > 0">
-
     <ion-button expand="block"
                 color="secondary"
                 (click)="inElectronClipboardKopieren()">In Zwischenablage kopieren</ion-button>
-
     <ion-button expand="block"
                 color="secondary"
                 (click)="dateiViaElectronSpeichern()">Als lokale Datei speichern</ion-button>
