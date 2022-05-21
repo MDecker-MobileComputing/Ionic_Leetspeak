@@ -1,0 +1,43 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Leetspeak-Konverter</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-list>
+    <ion-item>
+      <ion-label position="floating">Zu übersetzender Text</ion-label>
+      <ion-textarea rows="5" [(ngModel)]="eingabeText"></ion-textarea>
+    </ion-item>
+  </ion-list>
+
+  <ion-button expand="block"
+              color="success"
+              (click)="onUebersetzen()">Text in Leetspeak umwandeln</ion-button>
+  &nbsp;
+
+  <ion-button expand="block"
+              color="danger"
+              (click)="onLoeschen()">Text löschen</ion-button>
+
+  <ion-list>
+    <ion-item>
+      <ion-label position="floating">Übersetzungsergebnis</ion-label>
+      <ion-textarea rows="5" [(ngModel)]="ausgabeText" readonly></ion-textarea>
+    </ion-item>
+  </ion-list>
+
+  <div *ngIf="laueftInElectron && ausgabeText.trim().length > 0">
+
+    <ion-button expand="block"
+                color="secondary"
+                (click)="inElectronClipboardKopieren()">In Zwischenablage kopieren</ion-button>
+
+    <ion-button expand="block"
+                color="secondary"
+                (click)="dateiViaElectronSpeichern()">Als lokale Datei speichern</ion-button>
+  </div>
+
+</ion-content>

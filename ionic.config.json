@@ -1,0 +1,7 @@
+{
+  "name": "Leetspeak2",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
