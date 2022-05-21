@@ -21,7 +21,7 @@ export class HomePage {
   /**
    * Konstruktor für Dependency Injection.
    *
-   * API-Dokuk für Klasse `ElectronService`: https://www.npmjs.com/package/ngx-electron
+   * API-Doku für Klasse `ElectronService`: https://www.npmjs.com/package/ngx-electron
    */
   constructor(private alertCtrl: AlertController,
               private toastController: ToastController,
